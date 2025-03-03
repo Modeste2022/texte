@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter et Barrer des Valeurs</title>
+    <style>
+        .barre {
+            text-decoration: line-through; /* Applique un style barré au texte */
+        }
+    </style>
+</head>
+<body>
+    <label for="monChampTexte">Entrez un texte :</label>
+    <input type="text" id="monChampTexte" value="">
+    <button onclick="ajouterValeur()">Ajouter</button>
+    <ul id="listeValeurs"></ul> <!-- Liste pour afficher les valeurs -->
+
+    <script>
+        function ajouterValeur() {
+            // Récupérer la valeur du champ de texte
+            let champTexte = document.getElementById('monChampTexte').value;
+            // Vérifier si le champ de texte n'est pas vide
+            if (champTexte.trim() === '') {
+                alert('Le champ de texte ne peut pas être vide.');
+                return;
+            }
+            // Créer un nouvel élément de liste
+            let nouvelElement = document.createElement('li');
+            // Définir le texte de l'élément de liste
+            nouvelElement.innerText = champTexte;
+            // Ajouter une fonction pour barrer le texte sur clic
+            nouvelElement.onclick = function() {
+                this.classList.toggle('barre');
+            };
+            // Ajouter une fonction de suppression sur clic droit//ondlclick pour double cliquer
+            nouvelElement.oncontextmenu = function(e) {
+                e.preventDefault();
+                supprimerValeur(this);
+            };
+            // Ajouter l'élément à la liste
+            document.getElementById('listeValeurs').appendChild(nouvelElement);
+            // Effacer le champ de texte après ajout
+            document.getElementById('monChampTexte').value = '';
+        }
+
+        function supprimerValeur(element) {
+            // Supprimer l'élément de la liste
+            element.parentNode.removeChild(element);
+        }
+    </script>
+</body>
+</html>
